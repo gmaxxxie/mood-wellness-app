@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API连接测试</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 50px; }
+        button { padding: 10px 20px; margin: 10px; font-size: 16px; }
+        .result { margin: 20px 0; padding: 20px; background: #f5f5f5; border-radius: 5px; }
+        .error { background: #ffe6e6; color: #d00; }
+        .success { background: #e6ffe6; color: #080; }
+    </style>
+</head>
+<body>
+    <h1>API连接测试</h1>
+    <p>服务器IP: 192.168.31.169</p>
+    <p>后端端口: 3001</p>
+    
+    <button onclick="testConnection()">测试连接</button>
+    <button onclick="testAPI()">测试API</button>
+    <button onclick="testCORS()">测试CORS</button>
+    
+    <div id="result" class="result"></div>
+    
+    <script>
+        const apiUrl = 'http://192.168.31.169:3001';
+        const resultDiv = document.getElementById('result');
+        
+        function log(message, isError = false) {
+            console.log(message);
+            resultDiv.innerHTML += '<p>' + message + '</p>';
+            resultDiv.className = 'result ' + (isError ? 'error' : 'success');
+        }
+        
+        async function testConnection() {
+            resultDiv.innerHTML = '<p>开始测试连接...</p>';
+            try {
+                // 简单的fetch测试
+                const response = await fetch(apiUrl + '/api/health', {
+                    method: 'GET',
+                    mode: 'cors'
+                });
+                log('连接成功! 状态码: ' + response.status);
+                const data = await response.json();
+                log('响应数据: ' + JSON.stringify(data));
+            } catch (error) {
+                log('连接失败: ' + error.message, true);
+                log('错误详情: ' + error.toString(), true);
+            }
+        }
+        
+        async function testAPI() {
+            resultDiv.innerHTML = '<p>测试API...</p>';
+            try {
+                const response = await fetch(apiUrl + '/api/assessment/questions');
+                log('API请求成功! 状态码: ' + response.status);
+                const data = await response.json();
+                log('获取到 ' + data.data?.length + ' 个问题');
+            } catch (error) {
+                log('API请求失败: ' + error.message, true);
+            }
+        }
+        
+        function testCORS() {
+            resultDiv.innerHTML = '<p>测试CORS...</p>';
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', apiUrl + '/api/health', true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        log('CORS测试成功!');
+                        log('响应: ' + xhr.responseText);
+                    } else {
+                        log('CORS测试失败, 状态码: ' + xhr.status, true);
+                    }
+                }
+            };
+            xhr.onerror = function() {
+                log('CORS请求错误', true);
+            };
+            xhr.send();
+        }
+    </script>
+</body>
+</html>

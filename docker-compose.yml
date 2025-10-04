@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: mood_wellness
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  backend:
+    build: ./backend
+    ports:
+      - "3001:3001"
+    environment:
+      DATABASE_URL: "postgresql://admin:password123@postgres:5432/mood_wellness"
+      REDIS_URL: "redis://redis:6379"
+      JWT_SECRET: "your-jwt-secret-key-change-in-production"
+      NODE_ENV: "development"
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      VITE_API_URL: "http://backend:3001"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
+  redis_data:
