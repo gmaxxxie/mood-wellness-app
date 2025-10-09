@@ -85,24 +85,24 @@ INSERT INTO solution_types (type_name, type_name_zh, description, icon, color) V
 INSERT INTO assessment_questions (question_text, question_text_zh, question_type, category, options, weight) VALUES
 
 -- PANAS积极情感问题
-('How enthusiastic do you feel right now?', '你现在感觉有多热情？', 'scale', 'positive_affect', 
-'{"scale": {"min": 1, "max": 5, "labels": ["Very slightly", "A little", "Moderately", "Quite a bit", "Extremely"]}, "labels_zh": ["非常轻微", "有一点", "中等程度", "相当多", "极其"]}', 1.0),
+('How energized and enthusiastic do you feel right now?', '你此刻感到多有活力和热情？', 'scale', 'positive_affect', 
+'{"scale": {"min": 1, "max": 5, "labels": ["Very low energy", "Somewhat low", "Neutral", "Quite energized", "Highly energized"]}, "labels_zh": ["非常低", "较低", "中等", "较有活力", "活力十足"]}', 1.0),
 
-('How alert and attentive do you feel?', '你感觉多么警觉和专注？', 'scale', 'positive_affect',
-'{"scale": {"min": 1, "max": 5, "labels": ["Very slightly", "A little", "Moderately", "Quite a bit", "Extremely"]}, "labels_zh": ["非常轻微", "有一点", "中等程度", "相当多", "极其"]}', 1.0),
+('How focused or absorbed are you in your current activity right now?', '你现在对眼前的事情投入度有多高？', 'scale', 'positive_affect',
+'{"scale": {"min": 1, "max": 5, "labels": ["Very distracted", "Somewhat distracted", "Neutral", "Focused", "Deeply absorbed"]}, "labels_zh": ["非常分心", "有点分心", "一般", "专注", "全神贯注"]}', 1.1),
 
-('How determined do you feel to tackle challenges?', '你对应对挑战感到多么坚定？', 'scale', 'positive_affect',
-'{"scale": {"min": 1, "max": 5, "labels": ["Very slightly", "A little", "Moderately", "Quite a bit", "Extremely"]}, "labels_zh": ["非常轻微", "有一点", "中等程度", "相当多", "极其"]}', 1.0),
+('Thinking about the rest of today, how optimistic do you feel?', '想到今天剩下的时间，你的乐观程度如何？', 'scale', 'positive_affect',
+'{"scale": {"min": 1, "max": 5, "labels": ["Very pessimistic", "Somewhat pessimistic", "Balanced", "Somewhat optimistic", "Very optimistic"]}, "labels_zh": ["非常悲观", "略偏悲观", "中性", "稍感乐观", "非常乐观"]}', 1.0),
 
 -- PANAS消极情感问题  
-('How distressed or upset do you feel?', '你感到多么痛苦或不安？', 'scale', 'negative_affect',
-'{"scale": {"min": 1, "max": 5, "labels": ["Very slightly", "A little", "Moderately", "Quite a bit", "Extremely"]}, "labels_zh": ["非常轻微", "有一点", "中等程度", "相当多", "极其"]}', 1.2),
+('Right now, how close do you feel to becoming overwhelmed by your responsibilities?', '此刻面对责任时，你觉得自己距离被压垮有多近？', 'scale', 'negative_affect',
+'{"scale": {"min": 1, "max": 5, "labels": ["Not at all", "Slightly close", "Somewhat close", "Quite close", "I already feel overwhelmed"]}, "labels_zh": ["完全不会", "稍微接近", "有些接近", "非常接近", "几乎被压垮"]}', 1.2),
 
-('How nervous or anxious are you feeling?', '你感到多么紧张或焦虑？', 'scale', 'negative_affect',
-'{"scale": {"min": 1, "max": 5, "labels": ["Very slightly", "A little", "Moderately", "Quite a bit", "Extremely"]}, "labels_zh": ["非常轻微", "有一点", "中等程度", "相当多", "极其"]}', 1.2),
+('Right now, how strongly are you noticing physical signs of stress (e.g., clenched jaw, tight shoulders)?', '此刻你注意到身体紧张迹象（如下颌紧绷、肩颈僵硬）的程度如何？', 'scale', 'negative_affect',
+'{"scale": {"min": 1, "max": 5, "labels": ["Not at all", "A little", "Moderately", "Quite a bit", "Extremely"]}, "labels_zh": ["完全没有", "有一点", "中等", "相当明显", "非常明显"]}', 1.1),
 
-('How irritable or hostile do you feel?', '你感到多么易怒或敌对？', 'scale', 'negative_affect',
-'{"scale": {"min": 1, "max": 5, "labels": ["Very slightly", "A little", "Moderately", "Quite a bit", "Extremely"]}, "labels_zh": ["非常轻微", "有一点", "中等程度", "相当多", "极其"]}', 1.1),
+('When minor setbacks happen today, how quickly does irritation rise for you?', '今天遇到小挫折时，你的恼怒感上升得有多快？', 'scale', 'negative_affect',
+'{"scale": {"min": 1, "max": 5, "labels": ["I stay calm", "It builds slowly", "It shows up occasionally", "It rises quickly", "It flares almost instantly"]}, "labels_zh": ["我保持冷静", "情绪缓慢升温", "偶尔会冒起烦躁", "很快就感到烦躁", "几乎瞬间爆发"]}', 1.0),
 
 -- 简化的PHQ-2问题 (抑郁筛查)
 ('Over the past 2 weeks, how often have you felt down, depressed, or hopeless?', '在过去2周里，您有多经常感到沮丧、抑郁或绝望？', 'scale', 'depression',
@@ -119,11 +119,25 @@ INSERT INTO assessment_questions (question_text, question_text_zh, question_type
 '{"scale": {"min": 0, "max": 3, "labels": ["Not at all", "Several days", "More than half the days", "Nearly every day"]}, "labels_zh": ["完全没有", "几天", "超过一半的天数", "几乎每天"]}', 1.4),
 
 -- 情境化快速评估问题
-('What triggered your current emotional state?', '是什么引发了您当前的情绪状态？', 'multiple_choice', 'situational',
-'{"options": ["Work/Study stress", "Relationship issues", "Health concerns", "Financial worries", "Social situations", "No specific trigger", "Other"], "options_zh": ["工作/学习压力", "人际关系问题", "健康担忧", "经济担忧", "社交场合", "没有特定原因", "其他"]}', 0.8),
+('What is the main trigger for your current emotional state?', '是什么主要诱因带来了您当前的情绪状态？', 'multiple_choice', 'situational',
+'{"options": ["Work or study pressure", "Family or relationship issues", "Health concerns", "Financial pressure", "Social interactions", "Recent life changes or uncertainty", "No clear trigger", "Other"], "options_zh": ["工作或学习压力", "家庭或人际关系问题", "健康担忧", "经济压力", "社交场景", "近期变化或不确定性", "没有清晰诱因", "其他"]}', 0.8),
 
-('How would you describe your energy level right now?', '您如何描述自己现在的精力水平？', 'multiple_choice', 'energy',
-'{"options": ["Very low", "Low", "Moderate", "High", "Very high"], "options_zh": ["很低", "低", "中等", "高", "很高"]}', 0.9),
+('Compared with your usual state, how is your energy level right now?', '与平时相比，你此刻的精力水平如何？', 'multiple_choice', 'energy',
+'{"options": ["Very low", "Low", "Moderate", "High", "Very high"], "options_zh": ["很低", "较低", "中等", "较高", "很高"]}', 0.9),
 
-('How much control do you feel you have over your emotions right now?', '您觉得现在对自己情绪的控制力如何？', 'scale', 'control',
-'{"scale": {"min": 1, "max": 5, "labels": ["No control", "Little control", "Some control", "Good control", "Complete control"]}, "labels_zh": ["无控制力", "控制力很少", "有一些控制力", "控制力良好", "完全可控"]}', 1.0);
+('Right now, how much control do you feel you have over your emotions?', '你现在觉得自己对情绪的掌控力有多大？', 'scale', 'control',
+'{"scale": {"min": 1, "max": 5, "labels": ["No control", "Little control", "Some control", "Good control", "Complete control"]}, "labels_zh": ["几乎无法控制", "控制力很少", "有一些控制力", "控制力良好", "完全可控"]}', 1.0),
+
+-- 认知评价维度
+('Over the past few days, when challenges appear, how often do you jump to the worst-case scenario?', '在过去几天里，当遇到挑战时，你有多常自动想到最糟糕的结果？', 'scale', 'cognitive_appraisal',
+'{"scale": {"min": 0, "max": 3, "labels": ["Never", "Sometimes", "Often", "Almost always"]}, "labels_zh": ["从不", "偶尔", "经常", "几乎总是"]}', 1.2),
+
+('Which statement best reflects how you process difficult thoughts right now?', '以下哪句话最能描述你当前处理困难想法的方式？', 'multiple_choice', 'cognitive_appraisal',
+'{"options": ["I reframe challenges into learning opportunities", "I assume small issues will escalate quickly", "I distract myself instead of addressing worries", "I pause to gather facts before reacting"], "options_zh": ["我会把挑战转成学习机会", "我会认为小事会迅速恶化", "我会转移注意而非处理担忧", "我会先停下来收集事实再回应"]}', 1.0),
+
+-- 环境影响维度
+('Which surroundings are influencing your mood the most right now?', '当前哪类环境最影响你的情绪？', 'multiple_choice', 'environment',
+'{"options": ["Noise or crowded spaces", "Lack of natural light or fresh air", "Supportive and calming setting", "Constant digital notifications", "Feeling isolated or disconnected"], "options_zh": ["嘈杂或拥挤的环境", "缺乏自然光或新鲜空气", "支持且安静的场所", "不断响起的电子提醒", "感到孤立或与人疏离"]}', 0.9),
+
+('Over the past week, how satisfied are you with the balance between work/study and rest?', '过去一周内，你对工作或学习与休息的平衡感到多满意？', 'scale', 'environment',
+'{"scale": {"min": 1, "max": 5, "labels": ["Very dissatisfied", "Somewhat dissatisfied", "Neutral", "Somewhat satisfied", "Very satisfied"]}, "labels_zh": ["非常不满意", "有点不满意", "一般", "有点满意", "非常满意"]}', 1.1);
